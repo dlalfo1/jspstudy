@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<!-- 
+		GET 방식 요청 
+		1. <a> 태그를 이용한 단순 이동
+		2. <form> 태그를 이요한 submit
+		3. location.href를 이용한 이동 
+		4. open을 이용한 창 열기 
+		5. $.ajax({})을 이용한 비동기 처리 요청
+	-->
+	
+	<div>
+		<ul>
+			<li><a href="http://localhost:9090/01_Servlet/GetServlet">정상이동</a></li>
+			<li><a href="/01_Servlet/GetServlet">정상이동(추천)</a></li>
+			<li><a href="01_Servlet/GetServlet">불량링크(ContextPath는 슬래시로 시작해야 한다.)</a></li>
+			<li><a href="/GetServlet">불량링크(슬래시로 시작하면 ContextPath인 줄 안다.)</a></li>
+			<li><a href="GetServlet">불량링크(URLMapping으로 인식하지만 HTML 파일의 경로에 따라 실행 여부가 달라진다.)</a></li>
+		</ul>
+	</div>
+	
+	<!-- <a> 태그로 파라미터 보내기  -->
+	<div>
+		<a href="/01_Servlet/GetServlet?model=냉장고&price=200">파라미터전송</a>
+		
+	</div>
+
+</body>
+</html>
