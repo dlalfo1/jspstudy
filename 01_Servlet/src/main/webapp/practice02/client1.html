@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../resources/js/lib/jquery-3.6.4.min.js"></script>
+<script>
+	
+		function fnGugudan(){
+			var danValue = parseInt(Math.random() * 8) + 2; // 난수 발생시켜서 단의 숫자 만들어준다.
+			var numValue = parseInt(Math.random() * 9) + 1;
+			$('#dan').text(danValue);
+			$('#num').text(numValue);
+			$('#result').val('');
+		}
+		
+		$(function(){
+			fnGugudan();
+			$('#btn_refresh').on('click', fnGugudan);  // 선언 함수를 이벤트 리스너로 사용하는 경우에는 함수 이름만 작성한다.
+			$('#btn').on('click', function(){ // 계산 버튼을 클릭하면 파라미터로 값이 붙어서 정답이 나오는거임,,
+				location.href='/01_Servlet/GugudanServlet?dan=' + $('#dan').text() + '&num=' + $('#num').text() + '&result=' + $('#result').val();
+				// result에 입력한 값은 사용자가 입력한 것이니 value 값을 빼오는것임..
+			})	
+		
+		})
+
+</script>
+</head>
+<body>
+
+	<!--  
+		JavaScript
+		0.0 <= Math.random() < 1.0
+		0.0 <= Math.random() < * 3 < 3.0
+		0.0 <= parseInt(Math.random() * 3) < 3          : 0 1 2
+		0.0 <= parseInt(Math.random() * 3) + 1 < 4       : 1 2 3
+		
+		1 <= parseInt(Math.random() * 9) + 1 < 10 : 1 2 3 4 5 6 7 8 9
+		2 <= parseInt(Math.random() * 8) + 2 < 10 : 2 3 4 5 6 7 8 9	
+	-->
+	
+	<div>
+		<div><input type="button" value="새로고침" id="btn_refresh"></div>
+		<span id="dan"></span>
+		<span>X</span>
+		<span id="num"></span>
+		<span>=</span>
+		<input type="text" id="result" size="4">
+		<input type="button" id="btn" value="계산">
+	</div>
+ 
+		
+	
+</body>
+
+
+</html>

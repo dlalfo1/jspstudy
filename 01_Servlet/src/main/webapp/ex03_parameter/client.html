@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="../resources/js/lib/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
@@ -23,13 +24,100 @@
 			<li><a href="/GetServlet">불량링크(슬래시로 시작하면 ContextPath인 줄 안다.)</a></li>
 			<li><a href="GetServlet">불량링크(URLMapping으로 인식하지만 HTML 파일의 경로에 따라 실행 여부가 달라진다.)</a></li>
 		</ul>
-	</div>
-	
+	</div>  
 	<!-- <a> 태그로 파라미터 보내기  -->
 	<div>
 		<a href="/01_Servlet/GetServlet?model=냉장고&price=200">파라미터전송</a>
 		
 	</div>
+	
+	<!-- <form> 태그로 submit하기(파라미터 보내기) -->
+	<div>
+		<form action="/01_Servlet/GetServlet">
+		<!-- <input> 태그엔 꼭 name 속성을 주어야 파라미터를 인식 할 수 있다. -->
+		<!--
+			 id속성을 주는 이유는 프론트쪽에서 자바스크립트 처리를 하기 위한 이유고
+		     name 속성을 주는 이유는 백엔드쪽에서 submit 관련 등을 처리 하기 위한 이유이다.
+		     그래서 id, name이름을 동일하게 설정해도 문제되지 않고, 보통 이름을 일치시킨다.
+		-->
+		   	<label for="model">모델명</label>
+			<input type="text" id="model" name="model" placeholder="모델명">
+			<label for="price">가격</label>
+			<input type="text" id="price" name="price" placeholder="가격(원)" >
+			<button>파라미터전송</button> <!-- <button> 태그의 기본타입은 'submit'이기 때문에 파라미터를 전송해준다.  -->
+		</form>
+	</div>
+	
+	<!-- location.href 또는 open() 이용해서 파라미터 보내기 -->
+	<div>
+		<button id="btn">파라미터전송</button>
+	</div>
+	<script>
+		$('#btn').on('click', function(event){
+			// location.href = '/01_Servlet/GetServlet?model=tv&price=100';
+			open('/01_Servlet/GetServlet?model=tv&price=100'); /* open() 메소드는 실행시 새창으로 웹 페이지가 열린다. */
+		});
+	</script>
+	
+	<!-- 배열을 파라미터로 보내기 -->
+	<div>
+		<form action="/01_Servlet/ArrayServlet">
+			<!-- name이 같은 경우 서블릿(java)에 배열로 전달된다.  -->
+			<input type="text" name="tel" size="4" maxlength="3">
+			-
+			<input type="text" name="tel" size="4" maxlength="4">
+			-
+			<input type="text" name="tel" size="4" maxlength="4">
+			<button>배열전송</button>
+			<div>
+			<!-- name의 값이 같으므로 같은 배열로 전송되고 value 값으로 나뉜다.-->
+				<input type="checkbox" name="hobbies" value="travel" id="travel">
+				<label for="travel">여행</label>
+				<input type="checkbox" name="hobbies" value="swim" id="travel">
+				<label for="swim">수영</label>
+				<input type="checkbox" name="hobbies" value="golf" id="travel">
+				<label for="golf">골프</label>
+			</div>
+		</form>
+	</div>
+	
+	<!-- 
+		POST 방식 요청
+		1. <form> 태그를 이요한 submit
+		2. $.ajax({})을 이용한 비동기 처리 요청
+	-->
+	
+	<div>
+		<form method="POST" action="/01_Servlet/PostServlet">
+		<!--
+			<form> 태그에 포함된 입력 요소들이 name 속성을 가지고 있다면, null 처리를 할 수 없다. 빈 문자열로 처리해야 한다.
+			
+			즉, name속성에 "price"값을 줬으면 아무것도 입력하지 않아도 null값으로 처리되는 것이 아니라 빈 문자열(" ")로 처리된다.
+			null은 아예 값이 없는 것이고 값이 빈문자열(" ")인 것은 전혀 다른 경우이다. 
+		 -->
+			<label for="model">모델명></label>
+			<input type="text" id="model" name="model">
+			<label for="price">가격</label>
+			<input type="text" id="pirce" name="price">
+			<input type="submit" value="파라미터 전송">
+		</form>
+	</div>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 </body>
 </html>
