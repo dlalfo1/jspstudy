@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../resources/js/lib/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+	<div>
+	
+		<div>
+			<input type="text" id="model" placeholder="모델">
+			<input type="text" id="price" placeholder="가격">
+			<button id="btn1">텍스트요청</button>
+		</div>
+		<div id="content1">
+		
+		</div>
+	</div>
+	<script>
+		$('#btn1').on('click', function(){
+			$('#content1').empty(); // 내부내용을 지우는것
+			$.ajax({
+				/* 요청 */
+				type: "get",					// 요청 메소드
+				url:'/01_Servlet/TextServlet',  // 요청 url
+				data: 'model=' + $('#model').val() + '&price=' + $('#price').val(),   // 요청 파라미터(url 뒤에 파라미터로 붙이지 않고 data 프로퍼티 사용한다.)
+																					  // <input>태그에 입력한 값을 요청파라미터에 넣는다.
+				// async는 생략한다. 생략시 비동기처리 된다.
+				
+							                                          
+ 				/* 응답 */
+ 				dataType: 'text',
+ 				success: (resData)=>{  // resData엔 응답데이터가 담겨있다. 성공했을시 아이디가 content1인 <div>태그 뒤에 응답데이터를 append한다.
+ 									   // 응답데이터 처리는 서블릿에서 한다.
+ 									   // 서블릿의 out.println(resData); 이 코드가 여기로 들어온다.
+ 					$('#content1').append(resData);	
+ 				},
+ 				error: (jqXHR)=>{
+ 					$('#content1').append($('<div>').text('status : ' + jqXHR.status));
+ 					$('#content1').append($('<div>').text('responseText : ' + jqXHR.responseText));
+ 				}
+ 				
+			});
+		});
+	</script>
+	
+	<div>
+		<form id="frm_person">
+			<input type="text" name="name" placeholder="이름">
+			<input type="text" name="age" placeholder="나이">
+			<input type="button" id="btn2" value="JSON요청">
+		</form>
+		<div id="content2">
+		
+		</div>
+	</div>
+	<script>
+	
+		$('#btn2').on('click', function(){
+			$('#content2').empty();
+			$.ajax({
+				/* 요청 */
+				type: 'get',
+				url: '/01_Servlet/JSONServlet',
+				data: $('#frm_person').serialize(), // form 내부의 모든 입력 요소를 보냄. (name 속성이 파라미터로 인식된다.)
+				/* 응답 */
+				dataType: 'json',
+				success: (resData)=>{ // resData == {"name":"마돈나", "age":50} 
+									  // 원래는 JOSN.prase(resData) 하는 작업이 필요해야 한다. 
+									  // 응답데이터타입이 json상태이므로 '{"name":"마돈나", "age":50}' 이렇게 문자열상태가 아니다.
+									 
+					$('#content2').append($('<div>').text(resData));  // 그렇기 때문에 값이 제대로 보이지 않는다. ([object Object])
+					
+					$('#content2').append($('<div>').text(resData.name));
+					$('#content2').append($('<div>').text(resData.age));
+				}
+		
+			});
+		});
+	</script>
+</body>
+</html>
