@@ -37,6 +37,7 @@
  									   // 서블릿의 out.println(resData); 이 코드가 여기로 들어온다.
  					$('#content1').append(resData);	
  				},
+ 				
  				error: (jqXHR)=>{
  					$('#content1').append($('<div>').text('status : ' + jqXHR.status));
  					$('#content1').append($('<div>').text('responseText : ' + jqXHR.responseText));
@@ -66,19 +67,59 @@
 				url: '/01_Servlet/JSONServlet',
 				data: $('#frm_person').serialize(), // form 내부의 모든 입력 요소를 보냄. (name 속성이 파라미터로 인식된다.)
 				/* 응답 */
-				dataType: 'json',
-				success: (resData)=>{ // resData == {"name":"마돈나", "age":50} 
-									  // 원래는 JOSN.prase(resData) 하는 작업이 필요해야 한다. 
-									  // 응답데이터타입이 json상태이므로 '{"name":"마돈나", "age":50}' 이렇게 문자열상태가 아니다.
+				dataType: 'json',      // 받는 건 json타입이다. 그래서 원래 텍스트를 받으면 JOSN.prase(resData) 작업을 처리해서 자바스크립트 객체로 변환해야 
+								       // 객체의 프로퍼티를 빼는 작업을 수행할 수 있다.
+				success: (resData)=> { // resData == {"name":"마돈나", "age":50} 
+									   // 원래는 JOSN.prase(resData) 하는 작업이 필요해야 한다. 
+									   // 응답데이터타입이 json상태이므로 '{"name":"마돈나", "age":50}' 이렇게 문자열상태가 아니다.
 									 
 					$('#content2').append($('<div>').text(resData));  // 그렇기 때문에 값이 제대로 보이지 않는다. ([object Object])
 					
 					$('#content2').append($('<div>').text(resData.name));
 					$('#content2').append($('<div>').text(resData.age));
+				},
+				
+				error: (jqXHR)=> {
+					$('#content2').append($('<div>').text(jqXHR.status)); // 서블릿의 e.setStatus() 메소드에 담긴게 넘어온다. 
+					$('#content2').append($('<div>').text(jqXHR.responseText)); // 서블릿의 e.getMessage() 메소드에 담긴게 넘어온다.
 				}
 		
 			});
 		});
 	</script>
+	
+	<div>
+		<form id="frm_book">
+			<input type="text" name="title" placeholder="제목">
+			<input type="text" name="author" placeholder="저자">
+			<input type="text" name="price" placeholder="가격">
+			<input type="button" id="btn3" value="XML요청">
+		</form>
+		<div id="content3"></div>
+	</div>
+	<script>
+		$('#btn3').on('click', function(){
+			$('#content3').empty();
+			$.ajax({
+				/* 요청 */
+				type: 'get',
+				url: '/01_Servlet/XMLServlet',
+				data: $('#frm_book').serialize(),
+				/* 응답 */
+				dataType: 'xml',
+				success: (resDate)=> { // 자리가 굉장히 따뜻하네용 잘앉고갑니당
+					var ul = $('<ul>');
+					ul.append($('<li>').text('제목: ' + $(resDate).find('title').text()));
+					ul.append($('<li>').text('저자: ' + $(resDate).find('author').text()));
+					ul.append($('<li>').text('가격: ' + $(resDate).find('price').text()));
+					$('#content3').append(ul);
+				}
+				
+			});
+			
+		});
+	</script>
+
+
 </body>
 </html>
