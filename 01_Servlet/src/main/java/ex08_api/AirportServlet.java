@@ -1,4 +1,4 @@
-package ex07_ajax;
+package ex08_api;
 
 import java.io.BufferedReader;
 import java.io.IOException;
