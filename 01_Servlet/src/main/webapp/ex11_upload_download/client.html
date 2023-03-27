@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../resources/jquery-ui-1.13.2/external/jquery/jquery.js"></script>
+</head>
+<body>
+
+
+	<div>
+		<!-- 파일 첨부폼 필수 속성 : method="post" enctype="multipart/form-data"  -->
+		<!--  폼 데이터가 서버로 제출될 때 데이터가 인코딩되는 방법을 enctype을 통해서 명시한다. (post방식인 경우만 사용 가능) -->
+		<form id="frm_upload" action="/01_Servlet/UploadServlet" method="post" enctype="multipart/form-data">
+			<div>
+				<label for="uploader">작성자</label>
+				<input type="text" id="uploader" name="uploader">
+				<!-- label과 연결되는게 id속성, action(서브밋)과 연결되는건 name속성(파라미터) -->
+			</div>
+			<div>
+				<label for="filename">파일첨부</label>
+				<!-- 파일첨부에선 첨부된 파일의 이름이 value 값이다. -->
+				<input type="file" id="filename" name="filename">
+			</div>
+			<div>
+				<button>첨부하기</button>
+				<input type="reset" value="다시작성">
+			</div>
+		</form>
+	</div>
+	<script>
+		$('#filename').on('change', function(){
+			
+			// 확장자 제한하기
+			// 여기서 this는 이벤트 대상이다. : $('#filename')
+			var filename = $(this).val(); // 첨부된 파일명
+			                              
+			/* 
+				ex) 가나다.라마바.사아자차.ㅇㅇㅇ    
+			   파일의 확장자명은 마지막 마침표(.) 뒤에 붙은 글자다.
+			   확장자명 찾을 땐 마지막 마침표(.)의 인덱스를 찾고 1을 더해준다.(마침표는 빼고 가져오기 위해서)
+			   거기에 문자열 마지막까지 다 가져와주는 substring 메소드를 사용한다.
+			*/
+		    var extname = filename.substring(filename.lastIndexOf('.') + 1).toLowerCase(); // 첨부된 파일 확장자
+			var acceptList = ['jpg', 'jpeg', 'png', 'gif', 'tif']; // 허용할 확장자 목록
+			
+			if($.inArray(extname, acceptList) == -1) {	// 배열에 해당값이 들어있는지 확인하고 인덱스를 반환해주는 제이쿼리 ($.inArray)
+														// 반환할게 없으면 -1을 반환한다.
+														// acceptList 배열에 extname이 있나 확인하는 if문
+				alert('이미지만 첨부할 수 있습니다.');
+				$(this).val(''); // 첨부된 파일이 없어짐
+				return;
+			}	
+			
+			// 파일 크기 제한하기
+			var filesize = this.files[0].size; // 첨부된 파일 크기 (크기는 size 속성의 값이다.)
+			var maxsize = 1024 * 1024 * 10; // 최대 크기(10MB)
+			if(filesize > maxsize){
+				alert('첨부파일의 최대크기는 10MB입니다.')
+				$(this).val('');
+				return;
+			}
+			
+		});
+	
+	</script>
+</body>
+</html>
