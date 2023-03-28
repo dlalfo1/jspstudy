@@ -12,26 +12,12 @@
 %>
 
 <title><%=title%></title>
-<style>
-	nav ul {
-		display: flex;
-		list-style-type: none;
-	}
-	nav ul li {
-		width: 100px;
-		height: 30px;
-		text-align: center;
-		line-height: 30px;
-	}
+<%--  request.getContextPath() == /02_Jsp 
+	  jsp파일엔 이 주석을 사용하자. (오류방지)
+--%>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/header.css">
+<script src="<%=request.getContextPath()%>/resources/js/lib/jquery-3.6.4.min.js"></script>
 
-	nav ul li a {
-		text-decoration: none;
-		color: #181818;
-		display: block;
-		width: 100%; /* li태그와 크기 맞춰주기 */
-		height: 100%;
-	}
-</style>
 </head>
 <body>
 
