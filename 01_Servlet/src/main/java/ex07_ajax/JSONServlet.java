@@ -1,3 +1,4 @@
+
 package ex07_ajax;
 
 import java.io.IOException;

@@ -3,7 +3,8 @@
 	1. page 지시어    : page 설정, import 등
 	2. include 지시어 : 다른 Jsp를 포함
 	3. taglib 지시어    : JSTL/EL 포함
- --%>
+--%>
+
 <%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -40,7 +41,7 @@
 	 <h1>현재날짜 : <%=today%></h1>
 	 
 	 <hr>
-	 
+	 ㅇㅇ
 	 <%--
 	 	Java와 JavaScript의 사용
 		1. Java 변수를 JavaScript에서 사용할 수 있다.
