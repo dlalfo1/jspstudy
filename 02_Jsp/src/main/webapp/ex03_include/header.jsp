@@ -15,7 +15,13 @@
 <%--  request.getContextPath() == /02_Jsp 
 	  jsp파일엔 이 주석을 사용하자. (오류방지)이거이거
 --%>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/header.css">
+<%-- 
+     외부 정적 파일(css,js)을 포함할 땐 매번 경로가 변할 수 있도록 처리한다.
+     경로가 변해야 캐싱한 내용을 사용하지 않고 외부 파일을 읽는다.
+     경로가 변하지 않으면 캐싱한 내용을 사용하기 때문에 정적파일의 내용이 바뀌어도 적용되지 않는다.
+--%>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/header.css?dt=<%=System.currentTimeMillis()%>">
+
 <script src="<%=request.getContextPath()%>/resources/js/lib/jquery-3.6.4.min.js"></script>
 
 </head>

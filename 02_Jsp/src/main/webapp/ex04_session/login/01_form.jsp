@@ -22,7 +22,6 @@
 		</div>
 		
 	<% } else { %>
-	
 		<div>
 			<%=session.getAttribute("loginId")%> 님 반갑습니다.
 			<input type="button" value="로그아웃" id="btn_logout">
@@ -36,12 +35,6 @@
 		}) // 로그아웃은 03_logout.jsp 여기서 처리한다.
 	
 	</script>
-	
-	
-	
-	
-	
-	
 	
 			
 </body>
