@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.ActionForward;
+import service.BoardAddService;
 import service.BoardDetailService;
 import service.BoardListService;
 import service.BoardModifyService;
@@ -48,6 +49,9 @@ public class BoardController extends HttpServlet {
 			service = new BoardDetailService();
 			break;
 		case "/addBoard.do":
+			service = new BoardAddService();
+			break;
+		case "/modifyBoard.do":
 			service = new BoardModifyService();
 			break;
 		case "/removeBoard.do":
@@ -60,7 +64,7 @@ public class BoardController extends HttpServlet {
 		
 		// 서비스 실행
 		if(service != null) { // service에 null값으로 초기값을 줬기때문이 null체크를 해야한다.
-			af = service.execute(request, response);
+			af = service.execute(request, response); // af에는 request 요청과 response 응답이 담겨져 있다.
 		}
 		
 		// 응답View로 이동
