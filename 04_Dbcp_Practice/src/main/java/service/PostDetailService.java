@@ -1,0 +1,45 @@
+package service;
+
+import java.io.PrintWriter;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import domain.PostVO;
+import repository.PostDAO;
+
+public class PostDetailService implements IPostService {
+
+	@Override
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		// DAO의 메소드와 매칭되는 서비스 만들기, 메소드엔 매개변수로 들어가는 값들이 있으니 서비스에서 파라미터로 받아준다.
+		
+		Optional<String> opt = Optional.ofNullable(request.getParameter("post_no"));
+		int post_no = Integer.parseInt(opt.orElse("0"));
+		
+		PostVO post = PostDAO.getInstance().getPostByNo(post_no);
+		
+		if(post == null) {	
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert('존재하지 않는 포스트입니다.')");
+			out.println("history.back()");
+			out.println("</script>");
+			out.flush();
+			out.close();
+			
+			return null; // 이미 응답이 되었으므로(history.back() 코드로 이동함) 컨트롤러로 이동할 경로를 반환하면 안 된다.
+		
+		} else {
+			
+			request.setAttribute("post", post);
+			return "post/detail.jsp";
+			
+			
+		}
+		
+	}
+
+}
