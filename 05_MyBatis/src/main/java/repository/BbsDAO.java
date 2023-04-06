@@ -14,7 +14,7 @@ public class BbsDAO {
 	
 	// field
 	private SqlSessionFactory factory; // 필드로 선언을 빼야 모든 메소드들이 factory를 가져다 쓸 수 있다.
-	
+									   // 왜냐 DAO의 모든 메소드들이 세션을 얻어서 DB의 쿼리문을 실행시켜야 하니까.
 	// Singleton Pattern
 	private static BbsDAO dao = new BbsDAO(); // 1. 미리 객체를 생성해 놓은 후 private로 막는다.
 	private BbsDAO() { 						  // 2. 미리 생성자를 만들어 놓은 후 private로 막는다.
@@ -52,7 +52,6 @@ public class BbsDAO {
 		BbsDTO bbs = ss.selectOne(NS + "selectBbsByNo", bbsNo);
 		ss.close();
 		return bbs;
-		
 	}
 	
 	// 3. 삽입
@@ -79,9 +78,9 @@ public class BbsDAO {
 	}
 	
 	// 5. 삭제 
-	public int dedeleteBbs(int bbsNo) {
+	public int deleteBbs(int bbsNo) {
 		SqlSession ss = factory.openSession(false);
-		int deleteResult = ss.delete(NS + "dedeleteBbs", bbsNo);
+		int deleteResult = ss.delete(NS + "deleteBbs", bbsNo);
 		if (deleteResult == 1) {
 			ss.commit();
 		}

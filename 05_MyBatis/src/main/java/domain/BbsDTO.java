@@ -17,8 +17,4 @@ public class BbsDTO {
 	private String createdDate;
 	
 	
-	
-	
-	
-
 }
