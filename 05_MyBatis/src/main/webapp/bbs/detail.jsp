@@ -12,7 +12,7 @@
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script>
 
-	function goEdit() { // 편집기능은 기존에 작성한 내용을 가지고 넘어가야 한다.
+	function goEdit() { // 편S집기능은 기존에 작성한 내용을 가지고 넘어가야 한다.
 		location.href = '${contextPath}/edit.do?bbsNo=${bbs.bbsNo}';
 	}
 	

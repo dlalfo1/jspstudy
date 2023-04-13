@@ -51,7 +51,7 @@ public class BbsController extends HttpServlet {
 			break;
 		case "/modify.do":
 			service = new BbsModifyService();
-			break;
+			break;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 		case "/remove.do":
 			service = new BbsRemoveService();
 			break;	
